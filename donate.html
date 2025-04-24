@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate - Kakamega Environment Uplift Network</title>
+    <link rel="icon" type="image/jpeg" href="images/fav.jpg">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Mobile Navigation Styles */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+            background: var(--primary-color);
+        }
+
+        .navbar.hidden {
+            transform: translateY(-100%);
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 1001;
+            margin-right: 1rem;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: white;
+            transition: all 0.3s ease-in-out;
+            border-radius: 2px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--primary-color);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.3s ease-in-out;
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+
+            .nav-toggle.active span:nth-child(1) {
+                transform: translateY(9px) rotate(45deg);
+            }
+
+            .nav-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .nav-toggle.active span:nth-child(3) {
+                transform: translateY(-9px) rotate(-45deg);
+            }
+
+            .overlay.active {
+                display: block;
+            }
+
+            .navbar {
+                padding: 1rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/Youth photo with the assistant chief.jpeg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 120px 20px 60px;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .impact-section {
+            padding: 4rem 0;
+            background: var(--light-bg);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .impact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .impact-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .impact-card h3 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .impact-card p {
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+
+        .donate-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .donation-tiers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .tier-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tier-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .tier-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: 1rem;
+            right: -4rem;
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.5rem 4rem;
+            transform: rotate(45deg);
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .tier-card h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .tier-amount {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin: 1rem 0;
+            font-weight: bold;
+        }
+
+        .tier-benefits {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .tier-benefits li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .tier-benefits li::before {
+            content: '✓';
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .donate-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .amount-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .amount-btn {
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .amount-btn:hover, .amount-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .donate-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .donate-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .success-stories {
+            padding: 4rem 0;
+            background: linear-gradient(to bottom, var(--light-bg) 0%, white 100%);
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .story-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .story-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .story-content {
+            padding: 1.5rem;
+        }
+
+        .story-content h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .story-content p {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .impact-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .donation-tiers {
+                grid-template-columns: 1fr;
+            }
+
+            .amount-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">KEUN</div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="members.html">Members</a></li>
+                <li><a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="overlay" id="overlay"></div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <h1>Make a Difference Today</h1>
+            <p>Your support helps us create a sustainable future for Kakamega County through environmental conservation, community development, and sustainable agriculture initiatives.</p>
+        </section>
+
+        <section class="impact-section">
+            <h2 class="section-title">Our Impact So Far</h2>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <i class="fas fa-tree"></i>
+                    <h3>10,000+</h3>
+                    <p>Trees Planted</p>
+                </div>
+                <div class="impact-card">
+                    <i class="fas fa-users"></i>
+                    <h3>500+</h3>
+                    <p>Community Members Trained</p>
+                </div>
+                <div class="impact-card">
+                    <i class="fas fa-seedling"></i>
+                    <h3>20+</h3>
+                    <p>Active Projects</p>
+                </div>
+                <div class="impact-card">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <h3>1,000+</h3>
+                    <p>Lives Impacted</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="donate-container">
+            <h2 class="section-title">Choose Your Impact Level</h2>
+            <div class="donation-tiers">
+                <div class="tier-card">
+                    <h3>Seed Supporter</h3>
+                    <div class="tier-amount">KES 500</div>
+                    <ul class="tier-benefits">
+                        <li>Plant 5 trees in your name</li>
+                        <li>Digital certificate of contribution</li>
+                        <li>Monthly email updates</li>
+                    </ul>
+                    <button class="donate-btn" data-amount="500">
+                        <i class="fas fa-heart"></i> Choose This Plan
+                    </button>
+                </div>
+                <div class="tier-card featured">
+                    <h3>Growth Champion</h3>
+                    <div class="tier-amount">KES 1,000</div>
+                    <ul class="tier-benefits">
+                        <li>Plant 12 trees in your name</li>
+                        <li>Digital certificate of contribution</li>
+                        <li>Monthly email updates</li>
+                        <li>Name on our donor wall</li>
+                    </ul>
+                    <button class="donate-btn" data-amount="1000">
+                        <i class="fas fa-heart"></i> Choose This Plan
+                    </button>
+                </div>
+                <div class="tier-card">
+                    <h3>Forest Guardian</h3>
+                    <div class="tier-amount">KES 2,000</div>
+                    <ul class="tier-benefits">
+                        <li>Plant 25 trees in your name</li>
+                        <li>Digital certificate of contribution</li>
+                        <li>Monthly email updates</li>
+                        <li>Name on our donor wall</li>
+                        <li>Exclusive project visits</li>
+                    </ul>
+                    <button class="donate-btn" data-amount="2000">
+                        <i class="fas fa-heart"></i> Choose This Plan
+                    </button>
+                </div>
+            </div>
+
+            <div class="donate-form">
+                <h2>Make Your Contribution</h2>
+                <form id="donateForm">
+                    <div class="form-group">
+                        <label for="phone">Phone Number (M-PESA)</label>
+                        <input type="tel" id="phone" name="phone" placeholder="2547XXXXXXXX" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Select Amount (KES)</label>
+                        <div class="amount-options">
+                            <button type="button" class="amount-btn" data-amount="500">500</button>
+                            <button type="button" class="amount-btn" data-amount="1000">1,000</button>
+                            <button type="button" class="amount-btn" data-amount="2000">2,000</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="amount">Or Enter Custom Amount</label>
+                        <input type="number" id="amount" name="amount" placeholder="Enter amount in KES" required>
+                    </div>
+                    
+                    <button type="submit" class="donate-btn">
+                        <i class="fas fa-heart"></i> Donate Now
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section class="success-stories">
+            <h2 class="section-title">Impact Stories</h2>
+            <div class="story-grid">
+                <div class="story-card">
+                    <img src="images/Amina cabinet secretary for lands planting trees.jpeg" alt="Tree Planting Success">
+                    <div class="story-content">
+                        <h3>Cabinet Secretary's Tree Planting Initiative</h3>
+                        <p>The Cabinet Secretary for Lands joined our community in a successful tree planting event, demonstrating government support for environmental conservation.</p>
+                    </div>
+                </div>
+                <div class="story-card">
+                    <img src="images/Youth photo with the assistant chief.jpeg" alt="Youth Environmental Program">
+                    <div class="story-content">
+                        <h3>Youth Environmental Leadership</h3>
+                        <p>Our youth program has successfully engaged local young people in environmental conservation, creating the next generation of environmental leaders.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-phone"></i> +254722605254</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Lubao Market, Kakamega-Webuye Road</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="social-icon"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Kakamega Environment Uplift Network. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Navigation
+            const navToggle = document.getElementById('navToggle');
+            const navLinks = document.getElementById('navLinks');
+            const overlay = document.getElementById('overlay');
+            const navbar = document.querySelector('.navbar');
+            let lastScroll = 0;
+
+            // Hamburger menu toggle
+            function toggleNav() {
+                navToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+            }
+
+            navToggle.addEventListener('click', toggleNav);
+            overlay.addEventListener('click', toggleNav);
+
+            // Hide navbar on scroll down, show on scroll up
+            function handleScroll() {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll <= 0) {
+                    navbar.classList.remove('hidden');
+                    return;
+                }
+
+                if (currentScroll > lastScroll && !navLinks.classList.contains('active')) {
+                    // Scrolling down & menu is closed
+                    navbar.classList.add('hidden');
+                } else if (currentScroll < lastScroll) {
+                    // Scrolling up
+                    navbar.classList.remove('hidden');
+                }
+
+                lastScroll = currentScroll;
+            }
+
+            // Throttle scroll events
+            let ticking = false;
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        handleScroll();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            // Close mobile menu on window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+                    toggleNav();
+                }
+            });
+
+            // Existing donation form code
+            const form = document.getElementById('donateForm');
+            const amountInput = document.getElementById('amount');
+            const amountButtons = document.querySelectorAll('.amount-btn, .donate-btn[data-amount]');
+            
+            // Handle amount button clicks
+            amountButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const amount = this.dataset.amount;
+                    if (amount) {
+                        amountButtons.forEach(btn => btn.classList.remove('active'));
+                        this.classList.add('active');
+                        amountInput.value = amount;
+                        
+                        // If it's a tier button, scroll to the form
+                        if (this.closest('.tier-card')) {
+                            document.querySelector('.donate-form').scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+            
+            // Handle form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const phone = document.getElementById('phone').value;
+                const amount = amountInput.value;
+                
+                // Validate phone number format
+                if (!phone.match(/^254[0-9]{9}$/)) {
+                    alert('Please enter a valid Kenyan phone number starting with 254');
+                    return;
+                }
+                
+                // Send request to process_payment.php
+                fetch('process_payment.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `phone=${encodeURIComponent(phone)}&amount=${encodeURIComponent(amount)}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Payment request sent successfully! Please check your phone to complete the payment.');
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while processing your donation. Please try again.');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members - Kakamega Environment Uplift Network</title>
+    <link rel="icon" type="image/jpeg" href="images/fav.jpg">
+    <!-- Preload Lato font for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --font-primary: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+        }
+
+        .members-section {
+            padding: 120px 0 60px;
+            background: linear-gradient(to bottom, var(--light-bg) 0%, #ffffff 100%);
+        }
+
+        .members-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 0 2rem;
+        }
+
+        .members-section h1 {
+            font-family: 'Lato', sans-serif;
+            font-weight: 900;
+            font-size: 3.2rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1rem;
+            position: relative;
+            letter-spacing: -0.5px;
+        }
+
+        .members-section h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        .members-section > .container > .members-header > p {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--text-color);
+            max-width: 800px;
+            margin: 2rem auto 1rem;
+            line-height: 1.8;
+        }
+
+        .team-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 25px;
+            background: transparent;
+            color: var(--primary-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+            padding: 2rem;
+        }
+
+        .team-member {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .member-image {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .team-member:hover .member-image {
+            transform: scale(1.05);
+        }
+
+        .member-info {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            background: var(--white);
+        }
+
+        .member-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .team-member:hover .member-info::before {
+            width: 100px;
+            background: var(--secondary-color);
+        }
+
+        .member-name {
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            font-size: 1.8rem;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .member-role {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .member-bio {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .member-stats {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .member-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .team-member:nth-child(1) { animation-delay: 0.1s; }
+        .team-member:nth-child(2) { animation-delay: 0.2s; }
+        .team-member:nth-child(3) { animation-delay: 0.3s; }
+        .team-member:nth-child(4) { animation-delay: 0.4s; }
+        .team-member:nth-child(5) { animation-delay: 0.5s; }
+        .team-member:nth-child(6) { animation-delay: 0.6s; }
+
+        @media screen and (max-width: 768px) {
+            .members-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                padding: 1rem;
+            }
+
+            .member-image {
+                height: 280px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .members-section h1 {
+                font-size: 2rem;
+            }
+
+            .members-section > .container > p {
+                font-size: 1.1rem;
+            }
+
+            .member-name {
+                font-size: 1.6rem;
+            }
+
+            .member-role {
+                font-size: 1rem;
+            }
+
+            .member-bio {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">KEUN</div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="members.html" class="active">Members</a></li>
+                <li><a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="members-section">
+            <div class="container">
+                <div class="members-header">
+                    <h1>Our Team</h1>
+                    <p>Meet the dedicated individuals working tirelessly to make a positive impact on Kakamega's environment. Our diverse team brings together expertise in conservation, community development, and sustainable practices.</p>
+                </div>
+
+                <div class="team-categories">
+                    <button class="category-btn active">All Members</button>
+                    <button class="category-btn">Leadership</button>
+                    <button class="category-btn">Project Managers</button>
+                    <button class="category-btn">Field Officers</button>
+                </div>
+                
+                <div class="team-grid">
+                    <div class="team-member">
+                        <img src="images/Founder.jpeg" alt="Philip Menda" class="member-image">
+                        <div class="member-info">
+                            <h3 class="member-name">Philip Menda</h3>
+                            <p class="member-role">Executive Director</p>
+                            <p class="member-bio">Founder of KEUN CBO with extensive experience in environmental conservation and community development. Leading our mission to create sustainable change in Kakamega.</p>
+                            <div class="member-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">10+</div>
+                                    <div class="stat-label">Years Experience</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">20+</div>
+                                    <div class="stat-label">Projects Led</div>
+                                </div>
+                            </div>
+                            <div class="member-social">
+                                <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="social-link">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <img src="images/Nicole Elimah.jpeg" alt="Nicole Elimah" class="member-image">
+                        <div class="member-info">
+                            <h3 class="member-name">Nicole Elimah</h3>
+                            <p class="member-role">Project Manager</p>
+                            <p class="member-bio">Expert in sustainable agriculture and community engagement. Leads our agricultural initiatives and farmer training programs with passion and dedication.</p>
+                            <div class="member-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">50+</div>
+                                    <div class="stat-label">Farmers Trained</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">8+</div>
+                                    <div class="stat-label">Projects</div>
+                                </div>
+                            </div>
+                            <div class="member-social">
+                                <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="social-link">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <img src="images/Lihavi Rizah.jpeg" alt="Lihavi Rizah" class="member-image">
+                        <div class="member-info">
+                            <h3 class="member-name">Lihavi Rizah</h3>
+                            <p class="member-role">Community Outreach Coordinator</p>
+                            <p class="member-bio">Specializes in community mobilization and environmental education. Building strong relationships between KEUN and local communities.</p>
+                            <div class="member-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">300+</div>
+                                    <div class="stat-label">Community Members</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">15+</div>
+                                    <div class="stat-label">Programs</div>
+                                </div>
+                            </div>
+                            <div class="member-social">
+                                <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="social-link">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <img src="images/Lukulu Clayton.png" alt="Lukulu Clayton" class="member-image">
+                        <div class="member-info">
+                            <h3 class="member-name">Lukulu Clayton</h3>
+                            <p class="member-role">Conservation Specialist</p>
+                            <p class="member-bio">Expert in biodiversity preservation and habitat restoration. Leading our efforts to protect and restore Kakamega's natural ecosystems.</p>
+                            <div class="member-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">30+</div>
+                                    <div class="stat-label">Species Protected</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">500+</div>
+                                    <div class="stat-label">Acres Managed</div>
+                                </div>
+                            </div>
+                            <div class="member-social">
+                                <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="social-link">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <img src="images/Judith Dipondo.jpeg" alt="Judith Dipondo" class="member-image">
+                        <div class="member-info">
+                            <h3 class="member-name">Judith Dipondo</h3>
+                            <p class="member-role">Research Coordinator</p>
+                            <p class="member-bio">Leads research initiatives and environmental monitoring programs. Ensuring data-driven approaches to conservation and sustainable development.</p>
+                            <div class="member-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">12+</div>
+                                    <div class="stat-label">Research Projects</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">5+</div>
+                                    <div class="stat-label">Publications</div>
+                                </div>
+                            </div>
+                            <div class="member-social">
+                                <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="social-link">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <img src="images/Beatrice Ogolla.jpeg" alt="Beatrice Ogolla" class="member-image">
+                        <div class="member-info">
+                            <h3 class="member-name">Beatrice Ogolla</h3>
+                            <p class="member-role">Field Operations Manager</p>
+                            <p class="member-bio">Coordinates and oversees the implementation of conservation projects on the ground. Ensuring effective execution of our environmental initiatives.</p>
+                            <div class="member-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">25+</div>
+                                    <div class="stat-label">Field Projects</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">100+</div>
+                                    <div class="stat-label">Team Members</div>
+                                </div>
+                            </div>
+                            <div class="member-social">
+                                <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="social-link">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-phone"></i> +254722605254</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Lubao Market, Kakamega-Webuye Road</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="social-icon"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Kakamega Environment Uplift Network. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Team category filter functionality
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                // Add filter animation
+                const teamGrid = document.querySelector('.team-grid');
+                teamGrid.style.opacity = '0.8';
+                setTimeout(() => {
+                    teamGrid.style.opacity = '1';
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html> 
