@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Members - Kakamega Environment Uplift Network</title>
-    <link rel="icon" type="image/jpeg" href="images/fav.jpg">
+    <link rel="icon" type="image/png" href="images/KEUN LOGO.png">
     <!-- Preload Lato font for better performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -104,9 +104,45 @@
             transition: all 0.4s ease;
             position: relative;
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.6s ease-out forwards;
+            transform: translateX(-100px);
+            animation: slideInLeft 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            animation-delay: calc(var(--card-index, 0) * 0.3s);
         }
+
+        @keyframes slideInLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .team-member:nth-child(even) {
+            transform: translateX(100px);
+            animation-name: slideInRight;
+        }
+
+        @keyframes slideInRight {
+            0% {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Add longer animation delays for each card */
+        .team-member:nth-child(1) { --card-index: 1; }
+        .team-member:nth-child(2) { --card-index: 2; }
+        .team-member:nth-child(3) { --card-index: 3; }
+        .team-member:nth-child(4) { --card-index: 4; }
+        .team-member:nth-child(5) { --card-index: 5; }
+        .team-member:nth-child(6) { --card-index: 6; }
 
         .team-member:hover {
             transform: translateY(-10px);
@@ -226,24 +262,6 @@
             transform: translateY(-3px);
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .team-member:nth-child(1) { animation-delay: 0.1s; }
-        .team-member:nth-child(2) { animation-delay: 0.2s; }
-        .team-member:nth-child(3) { animation-delay: 0.3s; }
-        .team-member:nth-child(4) { animation-delay: 0.4s; }
-        .team-member:nth-child(5) { animation-delay: 0.5s; }
-        .team-member:nth-child(6) { animation-delay: 0.6s; }
-
         @media screen and (max-width: 768px) {
             .members-section h1 {
                 font-size: 2.5rem;
@@ -280,68 +298,286 @@
                 font-size: 1rem;
             }
         }
+
+        .youth-impact-section {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(to bottom, #ffffff 0%, var(--light-bg) 100%);
+        }
+
+        .youth-impact-section h2 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .youth-impact-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .impact-stat {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .impact-stat:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+
+        .youth-programs-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .youth-programs-section h2 {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .youth-programs-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .program-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .program-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .program-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .program-card h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .program-card p {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        @media screen and (max-width: 768px) {
+            .impact-stats {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .programs-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        /* Logo and Organization Name Styles */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-text {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .logo-text {
+                display: block;
+            }
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo-text {
+            display: none;
+            color: #333;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        @media (min-width: 768px) {
+            .logo-text {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
         <nav class="navbar">
-            <div class="logo">KEUN</div>
-            <div class="nav-toggle" id="navToggle">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="nav-content">
+                <a href="index.html" class="logo-container">
+                    <img src="images/KEUN LOGO.png" alt="KEUN Logo" class="logo">
+                    <span class="logo-text">Kakamega Environment Uplift Network</span>
+                </a>
+                <div class="menu-toggle">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="members.html" class="active">Members</a></li>
+                    <li><a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
             </div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="members.html" class="active">Members</a></li>
-                <li><a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank">Blog</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
         </nav>
     </header>
 
     <main>
         <section class="members-section">
             <div class="container">
+                <!-- Founders Section -->
                 <div class="members-header">
-                    <h1>Our Team</h1>
-                    <p>Meet the dedicated individuals working tirelessly to make a positive impact on Kakamega's environment. Our diverse team brings together expertise in conservation, community development, and sustainable practices.</p>
+                    <h1>Our Founders</h1>
+                    <p>Meet the visionary leaders who established Kakamega Environment Uplift Network, laying the foundation for environmental transformation in our community.</p>
                 </div>
 
-                <div class="team-categories">
-                    <button class="category-btn active">All Members</button>
-                    <button class="category-btn">Leadership</button>
-                    <button class="category-btn">Project Managers</button>
-                    <button class="category-btn">Field Officers</button>
-                </div>
-                
                 <div class="team-grid">
                     <div class="team-member">
                         <img src="images/Founder.jpeg" alt="Philip Menda" class="member-image">
                         <div class="member-info">
                             <h3 class="member-name">Philip Menda</h3>
-                            <p class="member-role">Executive Director</p>
-                            <p class="member-bio">Founder of KEUN CBO with extensive experience in environmental conservation and community development. Leading our mission to create sustainable change in Kakamega.</p>
+                            <p class="member-role">Founder & Executive Director</p>
+                            <p class="member-bio">A passionate environmental advocate and community leader who envisioned a greener future for Kakamega. His dedication to environmental conservation and community empowerment led to the establishment of KEUN.</p>
                             <div class="member-stats">
                                 <div class="stat-item">
                                     <div class="stat-value">10+</div>
                                     <div class="stat-label">Years Experience</div>
                                 </div>
                                 <div class="stat-item">
-                                    <div class="stat-value">20+</div>
+                                    <div class="stat-value">50+</div>
                                     <div class="stat-label">Projects Led</div>
                                 </div>
                             </div>
-                            <div class="member-social">
-                                <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="social-link">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
+                        </div>
+                    </div>
+
+                    <div class="team-member">
+                        <img src="images/Isaac.jpeg" alt="Isaac Khalisia" class="member-image">
+                        <div class="member-info">
+                            <h3 class="member-name">Isaac Khalisia</h3>
+                            <p class="member-role">Co-Founder & Program Director</p>
+                            <p class="member-bio">A dedicated environmentalist and strategic thinker who helped shape KEUN's vision and mission. His expertise in program development has been instrumental in creating impactful environmental initiatives.</p>
+                            <div class="member-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">8+</div>
+                                    <div class="stat-label">Years Experience</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">30+</div>
+                                    <div class="stat-label">Programs Developed</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
+                </div>
+
+                <div class="members-header">
+                    <h1>Our Team</h1>
+                    <p>Meet the dedicated individuals working tirelessly to make a positive impact on Kakamega's environment. Our diverse team brings together expertise in conservation, community development, and sustainable practices, with a strong focus on youth leadership and empowerment.</p>
+                </div>
+
+                <div class="team-categories">
+                    <button class="category-btn active">All Members</button>
+                    <button class="category-btn">Leadership</button>
+                    <button class="category-btn">Youth Leaders</button>
+                    <button class="category-btn">Project Managers</button>
+                    <button class="category-btn">Field Officers</button>
+                </div>
+                
+                <div class="team-grid">
                     <div class="team-member">
                         <img src="images/Nicole Elimah.jpeg" alt="Nicole Elimah" class="member-image">
                         <div class="member-info">
@@ -357,11 +593,6 @@
                                     <div class="stat-value">8+</div>
                                     <div class="stat-label">Projects</div>
                                 </div>
-                            </div>
-                            <div class="member-social">
-                                <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="social-link">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -382,18 +613,13 @@
                                     <div class="stat-label">Programs</div>
                                 </div>
                             </div>
-                            <div class="member-social">
-                                <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="social-link">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                            </div>
                         </div>
                     </div>
                     
                     <div class="team-member">
-                        <img src="images/Lukulu Clayton.png" alt="Lukulu Clayton" class="member-image">
+                        <img src="images/Ursula.jpeg" alt="Lukulu Clayton" class="member-image">
                         <div class="member-info">
-                            <h3 class="member-name">Lukulu Clayton</h3>
+                            <h3 class="member-name">Ursula Anyanga</h3>
                             <p class="member-role">Conservation Specialist</p>
                             <p class="member-bio">Expert in biodiversity preservation and habitat restoration. Leading our efforts to protect and restore Kakamega's natural ecosystems.</p>
                             <div class="member-stats">
@@ -405,11 +631,6 @@
                                     <div class="stat-value">500+</div>
                                     <div class="stat-label">Acres Managed</div>
                                 </div>
-                            </div>
-                            <div class="member-social">
-                                <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="social-link">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -430,11 +651,6 @@
                                     <div class="stat-label">Publications</div>
                                 </div>
                             </div>
-                            <div class="member-social">
-                                <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="social-link">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                            </div>
                         </div>
                     </div>
                     
@@ -454,11 +670,113 @@
                                     <div class="stat-label">Team Members</div>
                                 </div>
                             </div>
-                            <div class="member-social">
-                                <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="social-link">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
+                        </div>
+                    </div>
+
+                    <div class="team-member">
+                        <img src="images/Youth photo with the assistant chief.jpeg" alt="Youth Environmental Leaders" class="member-image">
+                        <div class="member-info">
+                            <h3 class="member-name">Youth Environmental Leaders</h3>
+                            <p class="member-role">Youth Leadership Team</p>
+                            <p class="member-bio">Our dynamic youth leadership team spearheads innovative environmental initiatives and community engagement programs, inspiring the next generation of environmental stewards.</p>
+                            <div class="member-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">50+</div>
+                                    <div class="stat-label">Youth Members</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">10+</div>
+                                    <div class="stat-label">Projects Led</div>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="team-member">
+                        <img src="images/SUSTAINABLE.jpg" alt="Youth Sustainable Agriculture Team" class="member-image">
+                        <div class="member-info">
+                            <h3 class="member-name">Youth Sustainable Agriculture Team</h3>
+                            <p class="member-role">Agricultural Innovation</p>
+                            <p class="member-bio">Young innovators leading sustainable farming practices and agricultural technology adoption in Kakamega, bridging traditional methods with modern sustainable approaches.</p>
+                            <div class="member-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">30+</div>
+                                    <div class="stat-label">Farms Managed</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">15+</div>
+                                    <div class="stat-label">Innovations</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="team-member">
+                        <img src="images/WATER.jpg" alt="Youth Water Conservation Team" class="member-image">
+                        <div class="member-info">
+                            <h3 class="member-name">Youth Water Conservation Team</h3>
+                            <p class="member-role">Water Resource Management</p>
+                            <p class="member-bio">Young water conservation specialists implementing innovative solutions for water resource management and community water access improvement.</p>
+                            <div class="member-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">8+</div>
+                                    <div class="stat-label">Water Projects</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">200+</div>
+                                    <div class="stat-label">Households Served</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Youth Impact Section -->
+                <div class="youth-impact-section">
+                    <h2>Youth Impact & Initiatives</h2>
+                    <div class="impact-stats">
+                        <div class="impact-stat">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Youth Members</div>
+                        </div>
+                        <div class="impact-stat">
+                            <div class="stat-number">30+</div>
+                            <div class="stat-label">Youth-Led Projects</div>
+                        </div>
+                        <div class="impact-stat">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-label">Schools Engaged</div>
+                        </div>
+                        <div class="impact-stat">
+                            <div class="stat-number">5000+</div>
+                            <div class="stat-label">Community Members Reached</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Youth Programs Section -->
+                <div class="youth-programs-section">
+                    <h2>Youth Leadership Programs</h2>
+                    <div class="programs-grid">
+                        <div class="program-card">
+                            <i class="fas fa-seedling"></i>
+                            <h3>Environmental Education</h3>
+                            <p>Empowering youth through hands-on environmental education and leadership training.</p>
+                        </div>
+                        <div class="program-card">
+                            <i class="fas fa-users"></i>
+                            <h3>Community Outreach</h3>
+                            <p>Youth-led initiatives to engage and educate local communities about environmental conservation.</p>
+                        </div>
+                        <div class="program-card">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Innovation Hub</h3>
+                            <p>Platform for young innovators to develop sustainable solutions for environmental challenges.</p>
+                        </div>
+                        <div class="program-card">
+                            <i class="fas fa-hands-helping"></i>
+                            <h3>Mentorship Program</h3>
+                            <p>Connecting young environmental leaders with experienced mentors in the field.</p>
                         </div>
                     </div>
                 </div>
@@ -489,21 +807,43 @@
 
     <script src="script.js"></script>
     <script>
-        // Team category filter functionality
-        const categoryBtns = document.querySelectorAll('.category-btn');
+        // Intersection Observer for animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.team-member');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Add delay based on index
+                        setTimeout(() => {
+                            entry.target.classList.add('animate');
+                        }, index * 200); // 200ms delay between each card
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.2,
+                rootMargin: '0px'
+            });
+
+            cards.forEach(card => observer.observe(card));
+        });
+
+        // Existing filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
         
-        categoryBtns.forEach(btn => {
+        filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 // Remove active class from all buttons
-                categoryBtns.forEach(b => b.classList.remove('active'));
+                filterBtns.forEach(b => b.classList.remove('active'));
                 // Add active class to clicked button
                 btn.classList.add('active');
                 
                 // Add filter animation
-                const teamGrid = document.querySelector('.team-grid');
-                teamGrid.style.opacity = '0.8';
+                const gallery = document.querySelector('.gallery');
+                gallery.style.opacity = '0.8';
                 setTimeout(() => {
-                    teamGrid.style.opacity = '1';
+                    gallery.style.opacity = '1';
                 }, 300);
             });
         });

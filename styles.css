@@ -19,6 +19,7 @@
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600;700&display=swap');
 
 * {
     margin: 0;
@@ -38,7 +39,9 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 1rem;
+    width: 95%;
+    box-sizing: border-box;
 }
 
 /* Navigation */
@@ -56,9 +59,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: var(--transition-slow);
+    transition: transform 0.3s ease-in-out;
     border-radius: 0 0 var(--border-radius) var(--border-radius);
     overflow: hidden;
+}
+
+.navbar.hidden {
+    transform: translateY(-100%);
 }
 
 .navbar.scrolled {
@@ -68,11 +75,12 @@ body {
 }
 
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: var(--white);
-    font-size: 2.2rem !important;
-    font-weight: 700;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    text-decoration: none;
     transition: var(--transition);
 }
 
@@ -80,40 +88,76 @@ body {
     transform: scale(1.05);
 }
 
+.logo img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    vertical-align: middle;
+    transition: var(--transition);
+}
+
+.logo img:hover {
+    transform: scale(1.05);
+    transition: var(--transition);
+}
+
+.logo-text {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--white);
+    display: block;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 .nav-links {
     display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin: 0;
+    padding: 0 0.5rem;
     list-style: none;
 }
 
-.nav-links li a {
-    color: var(--white);
+.nav-links a {
+    padding: 0.8rem 1.2rem;
+    white-space: nowrap;
+    color: white;
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    transition: var(--transition);
+    transition: all 0.3s ease;
+    border-radius: 25px;
     position: relative;
-    font-weight: 500;
-    font-size: 1.3rem !important;
-    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-.nav-links li a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
+.nav-links a:hover:not(.active):not(.donate-btn) {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-links a.active {
     background: var(--secondary-color);
-    transition: var(--transition);
-    transform: translateX(-50%);
+    color: white;
+    font-weight: 600;
 }
 
-.nav-links li a:hover::after {
-    width: 80%;
+/* Special styling for donate button */
+.nav-links .donate-btn {
+    background: var(--accent-color);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
-.nav-links li a.active::after {
-    width: 80%;
+.nav-links .donate-btn:hover,
+.nav-links .donate-btn.active {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
 }
 
 .nav-toggle {
@@ -146,12 +190,13 @@ body {
 .hero {
     height: 100vh;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     background: none;
     display: flex;
     align-items: center;
     justify-content: center;
     padding-top: 80px;
+    width: 100%;
 }
 
 .hero-split {
@@ -233,9 +278,10 @@ body {
 .hero-content {
     position: relative;
     z-index: 2;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 3rem;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 3rem 2rem;
     text-align: center;
     color: var(--white);
     background: rgba(0, 0, 0, 0.4);
@@ -266,43 +312,53 @@ body {
 }
 
 .tagline {
+    font-family: 'Lora', serif;
     font-size: 2.4rem !important;
     margin-bottom: 2rem;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    font-weight: 400;
+    font-weight: 500;
+    font-style: italic;
     line-height: 1.4;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeInTagline 1s ease-out forwards;
+    animation-delay: 8s; /* Start after typewriter effect */
 }
 
-/* Responsive adjustments for hero section */
+@keyframes fadeInTagline {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Alternative style - uncomment to use Lora instead
+.tagline {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-weight: 500;
+} */
+
+/* Responsive adjustments */
 @media screen and (max-width: 768px) {
-    .hero-content {
-        padding: 2rem;
-        margin: 0 1rem;
-    }
-
-    .hero h1 {
-        font-size: 3.2rem !important;
-    }
-
     .tagline {
         font-size: 1.8rem !important;
+        margin: 1.5rem auto;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .hero-content {
-        padding: 1.5rem;
-    }
-
-    .hero h1 {
-        font-size: 2.8rem !important;
-    }
-
     .tagline {
         font-size: 1.6rem !important;
+        margin: 1rem auto;
     }
 }
 
@@ -1027,10 +1083,6 @@ body {
     font-size: 4.2rem !important;
 }
 
-.tagline {
-    font-size: 2.2rem !important;
-}
-
 .card h2 {
     font-size: 2.4rem !important;
 }
@@ -1103,10 +1155,6 @@ body {
 
     .hero h1 {
         font-size: 3rem !important;
-    }
-
-    .tagline {
-        font-size: 1.8rem !important;
     }
 
     .logo {
@@ -2192,5 +2240,65 @@ html {
 
     .page-hero p {
         font-size: 1.3rem !important;
+    }
+}
+
+/* Typewriter effect */
+.typewriter {
+    position: relative;
+    font-size: 3rem !important;
+    margin: 0 auto;
+    border-right: .15em solid white;
+    white-space: nowrap;
+    overflow: visible;
+    letter-spacing: -0.02em;
+    width: max-content;
+    animation: 
+        typing 8s steps(100, end),
+        blink-caret .75s step-end infinite;
+    -webkit-animation: 
+        typing 8s steps(100, end),
+        blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@-webkit-keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: white }
+}
+
+/* Adjust typewriter for mobile */
+@media screen and (max-width: 1200px) {
+    .typewriter {
+        font-size: 2.5rem !important;
+        letter-spacing: -0.03em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .typewriter {
+        white-space: normal;
+        border-right: none;
+        animation: fadeInUp 1s ease-out;
+        font-size: 2rem !important;
+    }
+    
+    .hero-content {
+        padding: 2rem 1rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .typewriter {
+        font-size: 1.6rem !important;
     }
 } 

@@ -10,10 +10,28 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => loading.remove(), 500);
     }, 1000);
 
+    // Initialize typewriter effect for home page
+    const heroTitle = document.querySelector('.typewriter');
+    if (heroTitle) {
+        // Reset the animation when the element comes into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    heroTitle.style.animation = 'none';
+                    heroTitle.offsetHeight; // Trigger reflow
+                    heroTitle.style.animation = 'typing 8s steps(100, end), blink-caret .75s step-end infinite';
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(heroTitle);
+    }
+
     // Mobile Navigation Toggle
     const navToggle = document.getElementById('navToggle');
     const navLinks = document.querySelector('.nav-links');
     const navbar = document.querySelector('.navbar');
+    let lastScrollY = window.scrollY;
 
     navToggle.addEventListener('click', () => {
         navLinks.classList.toggle('active');
@@ -28,12 +46,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Navbar scroll effect
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
+    // Hide navbar on scroll down, show on scroll up
+    const handleScroll = () => {
+        const currentScrollY = window.scrollY;
+        
+        if (currentScrollY < 100) {
+            navbar.classList.remove('hidden');
+            return;
+        }
+
+        if (currentScrollY > lastScrollY) {
+            // Scrolling down
+            navbar.classList.add('hidden');
         } else {
-            navbar.classList.remove('scrolled');
+            // Scrolling up
+            navbar.classList.remove('hidden');
+        }
+        
+        lastScrollY = currentScrollY;
+    };
+
+    // Add scroll event listener with throttling
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                handleScroll();
+                ticking = false;
+            });
+            ticking = true;
         }
     });
 

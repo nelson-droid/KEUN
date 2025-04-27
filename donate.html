@@ -4,11 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donate - Kakamega Environment Uplift Network</title>
-    <link rel="icon" type="image/jpeg" href="images/fav.jpg">
+    <link rel="icon" type="image/png" href="images/KEUN logo.png">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #2c5530;
+            --secondary-color: #4CAF50;
+            --accent-color: #FF6B6B;
+            --text-color: #333;
+            --light-bg: #f5f5f5;
+        }
+
+        /* Navigation active state styles */
+        .navbar .nav-links li a {
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+
+        .navbar .nav-links li a.active {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+
+        .navbar .nav-links li a:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Special styling for donate button */
+        .navbar .nav-links li a.donate-btn {
+            background-color: #FF6B6B;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+
+        .navbar .nav-links li a.donate-btn:hover,
+        .navbar .nav-links li a.donate-btn.active {
+            background-color: #4CAF50;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Ensure navbar has a background */
+        .navbar {
+            background-color: #2c5530;
+            padding: 15px 20px;
+        }
+
+        /* Add spacing between nav items */
+        .navbar .nav-links li {
+            margin: 0 5px;
+        }
+
         /* Mobile Navigation Styles */
         .navbar {
             position: fixed;
@@ -17,6 +71,13 @@
             transition: transform 0.3s ease-in-out;
             z-index: 1000;
             background: var(--primary-color);
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            vertical-align: middle;
         }
 
         .navbar.hidden {
@@ -404,12 +465,70 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Add this to your existing styles */
+        .nav-links a {
+            position: relative;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transform: scaleX(1);
+        }
+
+        .swal2-popup {
+            font-size: 1.2rem !important;
+        }
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
     <header>
         <nav class="navbar">
-            <div class="logo">KEUN</div>
+            <div class="logo">
+                <img src="images/KEUN LOGO.png" alt="KEUN Logo">
+                <span class="logo-text">Kakamega Environment Uplift Network</span>
+            </div>
             <div class="nav-toggle" id="navToggle">
                 <span></span>
                 <span></span>
@@ -422,6 +541,7 @@
                 <li><a href="members.html">Members</a></li>
                 <li><a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank">Blog</a></li>
                 <li><a href="contact.html">Contact</a></li>
+                <li><a href="donate.html" class="donate-btn active">Donate</a></li>
             </ul>
         </nav>
         <div class="overlay" id="overlay"></div>
@@ -504,11 +624,21 @@
             </div>
 
             <div class="donate-form">
-                <h2>Make Your Contribution</h2>
+                <h2>Contact Information</h2>
                 <form id="donateForm">
                     <div class="form-group">
-                        <label for="phone">Phone Number (M-PESA)</label>
-                        <input type="tel" id="phone" name="phone" placeholder="2547XXXXXXXX" required>
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="254XXXXXXXXX" required>
                     </div>
                     
                     <div class="form-group">
@@ -526,7 +656,7 @@
                     </div>
                     
                     <button type="submit" class="donate-btn">
-                        <i class="fas fa-heart"></i> Donate Now
+                        <i class="fas fa-heart"></i> Submit
                     </button>
                 </form>
             </div>
@@ -574,6 +704,10 @@
         </div>
     </footer>
 
+    <div class="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Mobile Navigation
@@ -604,17 +738,14 @@
                 }
 
                 if (currentScroll > lastScroll && !navLinks.classList.contains('active')) {
-                    // Scrolling down & menu is closed
                     navbar.classList.add('hidden');
                 } else if (currentScroll < lastScroll) {
-                    // Scrolling up
                     navbar.classList.remove('hidden');
                 }
 
                 lastScroll = currentScroll;
             }
 
-            // Throttle scroll events
             let ticking = false;
             window.addEventListener('scroll', function() {
                 if (!ticking) {
@@ -626,68 +757,43 @@
                 }
             });
 
-            // Close mobile menu on window resize
             window.addEventListener('resize', function() {
                 if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
                     toggleNav();
                 }
             });
 
-            // Existing donation form code
-            const form = document.getElementById('donateForm');
-            const amountInput = document.getElementById('amount');
-            const amountButtons = document.querySelectorAll('.amount-btn, .donate-btn[data-amount]');
-            
             // Handle amount button clicks
+            const amountButtons = document.querySelectorAll('.amount-btn');
+            const amountInput = document.getElementById('amount');
+            
             amountButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const amount = this.dataset.amount;
-                    if (amount) {
-                        amountButtons.forEach(btn => btn.classList.remove('active'));
-                        this.classList.add('active');
-                        amountInput.value = amount;
-                        
-                        // If it's a tier button, scroll to the form
-                        if (this.closest('.tier-card')) {
-                            document.querySelector('.donate-form').scrollIntoView({ behavior: 'smooth' });
-                        }
-                    }
+                    amountButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    amountInput.value = amount;
                 });
             });
+
+            // Basic form handling
+            const form = document.getElementById('donateForm');
             
-            // Handle form submission
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
                 const phone = document.getElementById('phone').value;
                 const amount = amountInput.value;
                 
-                // Validate phone number format
+                // Basic validation
                 if (!phone.match(/^254[0-9]{9}$/)) {
                     alert('Please enter a valid Kenyan phone number starting with 254');
                     return;
                 }
-                
-                // Send request to process_payment.php
-                fetch('process_payment.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `phone=${encodeURIComponent(phone)}&amount=${encodeURIComponent(amount)}`
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Payment request sent successfully! Please check your phone to complete the payment.');
-                    } else {
-                        alert('Error: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while processing your donation. Please try again.');
-                });
+
+                // Show success message
+                alert('Thank you for your interest in donating! We will contact you shortly with payment instructions.');
+                form.reset();
             });
         });
     </script>

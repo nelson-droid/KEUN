@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects - Kakamega Environment Uplift Network</title>
-    <link rel="icon" type="image/jpeg" href="images/fav.jpg">
+    <link rel="icon" type="image/png" href="images/KEUN LOGO.png">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -184,12 +184,140 @@
                 font-size: 1.5rem;
             }
         }
+
+        .project-status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-status.ongoing {
+            background: rgba(var(--primary-color-rgb), 0.9);
+            color: white;
+        }
+
+        .project-status.completed {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .project-status.upcoming {
+            background: #FF9800;
+            color: white;
+        }
+
+        .gallery-item {
+            display: none;
+        }
+
+        .gallery-item.show {
+            display: block;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .impact-section {
+            padding: 4rem 0;
+            background: linear-gradient(to bottom, var(--light-bg) 0%, #ffffff 100%);
+        }
+
+        .impact-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .impact-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .impact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .impact-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .impact-card h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .impact-card ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .impact-card ul li {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .impact-card ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+        }
     </style>
 </head>
 <body>
     <header>
         <nav class="navbar">
-            <div class="logo">KEUN</div>
+            <div class="logo">
+                <img src="images/KEUN LOGO.png" alt="KEUN Logo">
+                <span class="logo-text">Kakamega Environment Uplift Network</span>
+            </div>
             <div class="nav-toggle" id="navToggle">
                 <span></span>
                 <span></span>
@@ -210,23 +338,24 @@
         <section class="projects-section">
             <div class="container">
                 <div class="projects-header">
-                    <h1>Our Projects</h1>
-                    <p>Discover our ongoing and completed environmental conservation initiatives in Kakamega. Each project represents our commitment to creating a sustainable future for our community.</p>
+                    <h1>Building Tomorrow's Kakamega Today</h1>
+                    <p>Embark on a journey through our transformative environmental initiatives. Each project represents a step towards a greener, more sustainable future for our community. From forest restoration to youth empowerment, discover how we're creating lasting positive change in Kakamega, one project at a time.</p>
                 </div>
 
                 <div class="filters">
-                    <button class="filter-btn active">All Projects</button>
-                    <button class="filter-btn">Ongoing</button>
-                    <button class="filter-btn">Completed</button>
-                    <button class="filter-btn">Upcoming</button>
+                    <button class="filter-btn active" data-filter="all">All Initiatives</button>
+                    <button class="filter-btn" data-filter="ongoing">In Progress</button>
+                    <button class="filter-btn" data-filter="completed">Success Stories</button>
+                    <button class="filter-btn" data-filter="upcoming">Future Vision</button>
                 </div>
                 
                 <div class="gallery">
-                    <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="gallery-item">
+                    <!-- Ongoing Projects -->
+                    <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="gallery-item ongoing">
                         <img src="images/project 2.jpeg" alt="Tree Planting Initiative">
                         <div class="gallery-caption">
-                            <h3>Tree Planting Initiative</h3>
-                            <p>Community-led reforestation project in Kakamega Forest, targeting the restoration of indigenous tree species and enhancement of biodiversity.</p>
+                            <h3>Green Legacy Initiative</h3>
+                            <p>Breathing new life into Kakamega Forest through our ambitious reforestation campaign. Together with our community, we're creating living corridors of biodiversity, connecting fragmented forest patches, and restoring nature's balance.</p>
                             <div class="project-stats">
                                 <div class="stat-item">
                                     <i class="fas fa-tree"></i>
@@ -234,104 +363,111 @@
                                 </div>
                                 <div class="stat-item">
                                     <i class="fas fa-users"></i>
-                                    <span>200+ Volunteers</span>
+                                    <span>200+ Earth Heroes</span>
                                 </div>
                             </div>
                             <div class="progress-bar">
                                 <div class="progress" style="width: 75%;"></div>
                             </div>
+                            <span class="project-status ongoing">In Full Swing</span>
                         </div>
                     </a>
 
-                    <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="gallery-item">
+                    <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="gallery-item ongoing">
                         <img src="images/SUSTAINABLE.jpg" alt="Sustainable Agriculture">
                         <div class="gallery-caption">
-                            <h3>Sustainable Agriculture</h3>
-                            <p>Training local farmers in eco-friendly farming methods, promoting organic practices and soil conservation techniques.</p>
+                            <h3>Farm of the Future</h3>
+                            <p>Revolutionizing local agriculture through eco-friendly innovation. Our farmers are pioneering sustainable practices that not only yield better harvests but also nurture the soil for generations to come.</p>
                             <div class="project-stats">
                                 <div class="stat-item">
                                     <i class="fas fa-seedling"></i>
-                                    <span>50+ Farms</span>
+                                    <span>50+ Green Farms</span>
                                 </div>
                                 <div class="stat-item">
                                     <i class="fas fa-graduation-cap"></i>
-                                    <span>150+ Trained</span>
+                                    <span>150+ Eco-Warriors</span>
                                 </div>
                             </div>
                             <div class="progress-bar">
                                 <div class="progress" style="width: 85%;"></div>
                             </div>
+                            <span class="project-status ongoing">Growing Strong</span>
                         </div>
                     </a>
 
-                    <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="gallery-item">
+                    <!-- Completed Projects -->
+                    <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="gallery-item completed">
                         <img src="images/WATER.jpg" alt="Water Conservation">
                         <div class="gallery-caption">
-                            <h3>Water Conservation</h3>
-                            <p>Implementing water conservation measures and protecting local water sources through community-based initiatives.</p>
+                            <h3>Blue Life Project</h3>
+                            <p>A groundbreaking initiative that has transformed water conservation in our community. Through innovative solutions and community participation, we've created sustainable water management systems that will serve generations.</p>
                             <div class="project-stats">
                                 <div class="stat-item">
                                     <i class="fas fa-water"></i>
-                                    <span>5 Water Sources</span>
+                                    <span>5 Springs Revived</span>
                                 </div>
                                 <div class="stat-item">
                                     <i class="fas fa-home"></i>
-                                    <span>300+ Households</span>
+                                    <span>300+ Lives Changed</span>
                                 </div>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress" style="width: 60%;"></div>
+                                <div class="progress" style="width: 100%;"></div>
                             </div>
+                            <span class="project-status completed">Mission Accomplished</span>
                         </div>
                     </a>
 
-                    <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="gallery-item">
+                    <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="gallery-item completed">
                         <img src="images/Youth photo with the assistant chief.jpeg" alt="Youth Environmental Education">
                         <div class="gallery-caption">
-                            <h3>Youth Environmental Education</h3>
-                            <p>Engaging young people in environmental conservation through educational programs and hands-on activities.</p>
+                            <h3>Green Leaders of Tomorrow</h3>
+                            <p>We've ignited a passion for environmental stewardship in our youth through immersive learning experiences. Our graduates are now leading their own environmental initiatives, creating a ripple effect of positive change.</p>
                             <div class="project-stats">
                                 <div class="stat-item">
                                     <i class="fas fa-child"></i>
-                                    <span>500+ Youth</span>
+                                    <span>500+ Young Leaders</span>
                                 </div>
                                 <div class="stat-item">
                                     <i class="fas fa-school"></i>
-                                    <span>10 Schools</span>
+                                    <span>10 Eco-Schools</span>
                                 </div>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress" style="width: 90%;"></div>
+                                <div class="progress" style="width: 100%;"></div>
                             </div>
+                            <span class="project-status completed">Success Story</span>
                         </div>
                     </a>
 
-                    <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="gallery-item">
+                    <!-- Upcoming Projects -->
+                    <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="gallery-item upcoming">
                         <img src="images/WASTE.jpg" alt="Waste Management">
                         <div class="gallery-caption">
-                            <h3>Waste Management</h3>
-                            <p>Implementing community waste reduction and recycling programs to promote cleaner environments.</p>
+                            <h3>Zero Waste Revolution</h3>
+                            <p>Embarking on an ambitious journey to transform waste management in Kakamega. Through innovative recycling programs and community education, we're turning waste into resources and creating green jobs.</p>
                             <div class="project-stats">
                                 <div class="stat-item">
                                     <i class="fas fa-recycle"></i>
-                                    <span>20+ Centers</span>
+                                    <span>20+ Future Centers</span>
                                 </div>
                                 <div class="stat-item">
                                     <i class="fas fa-trash-alt"></i>
-                                    <span>5 tons recycled</span>
+                                    <span>10 Tons Goal</span>
                                 </div>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress" style="width: 45%;"></div>
+                                <div class="progress" style="width: 0%;"></div>
                             </div>
+                            <span class="project-status upcoming">Coming Soon</span>
                         </div>
                     </a>
 
-                    <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="gallery-item">
+                    <a href="https://web.facebook.com/share/g/12HuyUvUcBe/" target="_blank" class="gallery-item upcoming">
                         <img src="images/Biodiversity.jpg" alt="Biodiversity Conservation">
                         <div class="gallery-caption">
-                            <h3>Biodiversity Conservation</h3>
-                            <p>Protecting and monitoring local flora and fauna species through conservation efforts and research.</p>
+                            <h3>Wildlife Guardians</h3>
+                            <p>An innovative program set to revolutionize biodiversity conservation in Kakamega. Using cutting-edge technology and community knowledge, we're creating a new model for species protection and habitat restoration.</p>
                             <div class="project-stats">
                                 <div class="stat-item">
                                     <i class="fas fa-leaf"></i>
@@ -343,10 +479,48 @@
                                 </div>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress" style="width: 70%;"></div>
+                                <div class="progress" style="width: 0%;"></div>
                             </div>
+                            <span class="project-status upcoming">Vision 2024</span>
                         </div>
                     </a>
+                </div>
+
+                <!-- Impact Section -->
+                <div class="impact-section">
+                    <h2>Creating Lasting Change</h2>
+                    <div class="impact-grid">
+                        <div class="impact-card">
+                            <i class="fas fa-tree"></i>
+                            <h3>Nature's Revival</h3>
+                            <ul>
+                                <li>10,000+ Trees Creating New Life</li>
+                                <li>5 Water Sources Flowing Again</li>
+                                <li>30+ Species Finding Sanctuary</li>
+                                <li>500+ Acres Restored to Glory</li>
+                            </ul>
+                        </div>
+                        <div class="impact-card">
+                            <i class="fas fa-users"></i>
+                            <h3>Community Transformation</h3>
+                            <ul>
+                                <li>1000+ Environmental Champions</li>
+                                <li>150+ Sustainable Farmers</li>
+                                <li>10 Schools Leading Change</li>
+                                <li>20+ Green Jobs Created</li>
+                            </ul>
+                        </div>
+                        <div class="impact-card">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>Sustainable Growth</h3>
+                            <ul>
+                                <li>50+ Thriving Eco-Farms</li>
+                                <li>300+ Families Empowered</li>
+                                <li>15+ Strategic Partnerships</li>
+                                <li>5+ Green Enterprise Programs</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -375,22 +549,31 @@
 
     <script src="script.js"></script>
     <script>
-        // Filter functionality
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all buttons
-                filterBtns.forEach(b => b.classList.remove('active'));
-                // Add active class to clicked button
-                btn.classList.add('active');
-                
-                // Add filter animation here if needed
-                const gallery = document.querySelector('.gallery');
-                gallery.style.opacity = '0.8';
-                setTimeout(() => {
-                    gallery.style.opacity = '1';
-                }, 300);
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            // Show all items initially
+            galleryItems.forEach(item => item.classList.add('show'));
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+                    
+                    const filter = btn.getAttribute('data-filter');
+                    
+                    galleryItems.forEach(item => {
+                        item.classList.remove('show');
+                        setTimeout(() => {
+                            if (filter === 'all' || item.classList.contains(filter)) {
+                                item.classList.add('show');
+                            }
+                        }, 300);
+                    });
+                });
             });
         });
     </script>
